@@ -1,0 +1,55 @@
+﻿/* コンテンツ領域全体 */ 
+.contents {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+/* コンテンツヘッダー領域 */
+.header {
+}
+
+/* バナー */
+.banner {
+    background-color: skyblue;
+}
+
+/* バナー下のヘッダー情報表示領域 */
+.headerArea {
+    display: flex;
+    flex-direction: row;
+}
+
+/* タイトル／ようこそメッセージの表示領域 */
+.titleArea {
+    flex-basis: 50%;
+}
+
+/* ログアウトリンクの表示領域 */
+.logoutArea {
+    flex-basis: 50%;
+    text-align: right;
+}
+
+/* メッセージ領域 */
+.messageArea {
+    text-align: center;
+}
+
+/* コンテンツボディ領域 */
+.body {
+    display: flex;
+    flex-direction: column;
+}
+
+.alignCenter {
+    align-items: center;
+}
+
+/* コンテンツフッター領域 */
+.footer {
+    margin-top: 5em;
+    text-align: center;
+    font-size: smaller;
+}
