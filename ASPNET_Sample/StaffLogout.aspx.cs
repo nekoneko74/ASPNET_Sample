@@ -14,7 +14,7 @@ namespace ASPNET_Sample.Staff
         /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            // セッション情報を全て破棄する
+            // セッション情報内のスタッフログイン情報を破棄する
             this.DestroySession();
         }
     }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="StaffList.aspx.cs" Inherits="ASPNET_Sample.Staff.StaffList" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="StaffList2.aspx.cs" Inherits="ASPNET_Sample.Staff.StaffList2" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -60,27 +60,37 @@
                     </table>
                 </div>
                 <div style="margin-top: 1.5em;">
-                    <asp:GridView ID="GrdvStaffList" runat="server" EmptyDataText="該当するスタッフ情報は存在しません" ShowHeaderWhenEmpty="True" AllowPaging="True" OnRowEditing="GrdvStaffList_RowEditing" OnRowDeleting="GrdvStaffList_RowDeleting" BorderStyle="Solid" OnPageIndexChanging="GrdvStaffList_PageIndexChanging" AutoGenerateColumns="False" OnRowDataBound="GrdvStaffList_RowDataBound">
+                    <asp:GridView ID="GrdvStaffList" runat="server" EmptyDataText="該当するスタッフ情報は存在しません" ShowHeaderWhenEmpty="True" OnRowEditing="GrdvStaffList_RowEditing" OnRowDeleting="GrdvStaffList_RowDeleting" BorderStyle="Solid" OnRowDataBound="GrdvStaffList_RowDataBound" DataKeyNames="StaffId" DataSourceID="SqlDataSource" AutoGenerateColumns="False" AllowPaging="True" AllowSorting="True">
                         <Columns>
-                            <asp:CommandField InsertVisible="False" ShowCancelButton="False" ShowDeleteButton="True" ShowEditButton="True" />
-                            <asp:BoundField DataField="Account" HeaderText="アカウント" ReadOnly="True" />
-                            <asp:BoundField DataField="DisplayName" HeaderText="表示名" ReadOnly="True" />
-                            <asp:BoundField DataField="StaffType" HeaderText="スタッフ種別" ReadOnly="True">
+                            <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
+                            <asp:BoundField DataField="Account" HeaderText="アカウント" SortExpression="Account" />
+                            <asp:BoundField DataField="Password" HeaderText="パスワード" SortExpression="Password" Visible="False"></asp:BoundField>
+                            <asp:BoundField DataField="DisplayName" HeaderText="表示名" SortExpression="DisplayName" />
+                            <asp:BoundField DataField="StaffType" HeaderText="スタッフ種別" SortExpression="StaffType" >
                             <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="UpdateDate" DataFormatString="{0:yyyy/MM/dd HH:mm}" HeaderText="最終更新日時" ReadOnly="True">
+                            <asp:BoundField DataField="UpdateDate" HeaderText="最終更新日時" SortExpression="UpdateDate" DataFormatString="{0:yyyy/MM/dd HH:mm}">
                             <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>
-                        </Columns>
+                            <asp:BoundField DataField="UpdateStaffId" HeaderText="最終更新者" SortExpression="UpdateStaffId" Visible="False"></asp:BoundField>
+                            <asp:BoundField DataField="DeleteDate" HeaderText="削除日時" SortExpression="DeleteDate" Visible="False" ></asp:BoundField>
+                            </Columns>
                     </asp:GridView>
-                </div>
-                <div style="margin-top: 1.5em;">
-                    <asp:Button ID="BtnAddNew" runat="server" Text="新規登録" OnClick="BtnAddNew_Click" />
+                    <div style="margin-top: 1.5em;">
+                        <asp:Button ID="BtnAddNew" runat="server" Text="新規登録" OnClick="BtnAddNew_Click" />
+                    </div>
                 </div>
             </div>
             <!-- フッター -->
             <!-- #include file="./inc/StaffFooter.inc" -->
         </div>
+        <asp:SqlDataSource ID="SqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ASPNETConnectionString %>" SelectCommand="SELECT StaffId, Account, Password, DisplayName, StaffType, UpdateDate, UpdateStaffId, DeleteDate FROM Staff WHERE (Account LIKE '%' + @Account + '%') AND (DisplayName LIKE '%' + @DisplayName + '%') AND (@StaffType = - 1 OR StaffType = @StaffType) AND (DeleteDate IS NULL) ORDER BY Account">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="TxtAccount" Name="Account" PropertyName="Text" Type="String" ConvertEmptyStringToNull="false" />
+                <asp:ControlParameter ControlID="TxtDisplayName" Name="DisplayName" PropertyName="Text" Type="String" ConvertEmptyStringToNull="false" />
+                <asp:ControlParameter ControlID="DrLstStaffType" PropertyName="SelectedValue" Name="StaffType" Type="Int32"></asp:ControlParameter>
+            </SelectParameters>
+        </asp:SqlDataSource>
     </form>
 </body>
 </html>
