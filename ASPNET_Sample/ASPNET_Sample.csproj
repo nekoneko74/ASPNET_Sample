@@ -73,6 +73,7 @@
     <Content Include="inc\StaffBanner.inc" />
     <Content Include="StaffList.aspx" />
     <Content Include="StaffList2.aspx" />
+    <Content Include="StaffList3.aspx" />
     <Content Include="StaffLogin.aspx" />
     <Content Include="StaffLogout.aspx" />
     <Content Include="StaffMenu.aspx" />
@@ -81,6 +82,13 @@
   <ItemGroup>
     <Compile Include="common\PageMode.cs" />
     <Compile Include="dao\StaffDao.cs" />
+    <Compile Include="StaffList3.aspx.cs">
+      <DependentUpon>StaffList3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StaffList3.aspx.designer.cs">
+      <DependentUpon>StaffList3.aspx</DependentUpon>
+    </Compile>
     <Content Include="database\Staff.sql" />
     <Compile Include="dto\StaffDto.cs" />
     <Compile Include="dto\StaffType.cs" />
