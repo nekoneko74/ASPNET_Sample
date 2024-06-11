@@ -23,7 +23,8 @@ namespace ASPNET_Sample.Staff
 
             // メニューリストを構築する
             this.BltLstMenuList.Items.Add(new ListItem("スタッフ管理機能", "./StaffList.aspx"));
-            this.BltLstMenuList.Items.Add(new ListItem("スタッフ管理機能（データバインド版）", "./StaffList2.aspx"));
+            this.BltLstMenuList.Items.Add(new ListItem("スタッフ管理機能（SqlDataSource版）", "./StaffList2.aspx"));
+            this.BltLstMenuList.Items.Add(new ListItem("スタッフ管理機能（SqlDataAdapter版）", "./StaffList3.aspx"));
         }
     }
 }

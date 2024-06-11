@@ -74,8 +74,11 @@ namespace ASPNET_Sample.Staff
             // 各行の「スタッフ種別」列の表示内容をカスタマイズする
             if (DataControlRowType.DataRow == e.Row.RowType)
             {
-//                DataRow rowData = (DataRow)e.Row.DataItem;
-//                e.Row.Cells[3].Text = (StaffType.ADMIN == rowData.StaffType) ? "システム管理者" : "一般スタッフ";
+                StaffType staffType;
+                if (true == Enum.TryParse<StaffType>(((DataRowView)e.Row.DataItem).Row.ItemArray[4].ToString(), out staffType))
+                {
+                    e.Row.Cells[3].Text = (StaffType.ADMIN == staffType) ? "システム管理者" : "一般スタッフ";
+                }
             }
         }
 
