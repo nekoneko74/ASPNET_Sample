@@ -199,6 +199,7 @@ namespace ASPNET_Sample.Staff
             dataAdapter.Fill(staffList);
             this.GrdvStaffList.DataSource = staffList;
             this.GrdvStaffList.PageIndex = pageIndex;
+            this.GrdvStaffList.DataKeyNames = new string[] { "StaffId" };
             this.GrdvStaffList.DataBind();
         }
     }
