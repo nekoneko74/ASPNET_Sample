@@ -105,8 +105,9 @@ namespace ASPNET_Sample
         /// ユーティリティ：オブジェクトの保持している値を文字列化して取得する
         /// </summary>
         /// <param name="instance">処理対象のオブジェクト</param>
+        /// <param name="depth">再帰処理の深さ</param>
         /// <returns>オブジェクトの保持している値を文字列化したもの</returns>
-        public static string FormatValue(object instance)
+        public static string FormatValue(object instance, int depth = 0)
         {
             string retStr = "null";
 
@@ -120,6 +121,16 @@ namespace ASPNET_Sample
                 if (true == type.IsPrimitive || instance is string)
                 {
                     retStr = String.Format("({0}) {1}", type.Name, instance);
+                }
+                // 10進浮動小数点数型である場合
+                else if (instance is Decimal)
+                {
+                    retStr = String.Format("({0}) {1}", type.Name, instance.ToString());
+                }
+                // 日付時刻型である場合
+                else if (instance is DateTime)
+                {
+                    retStr = String.Format("({0}) {1}", type.Name, instance.ToString());
                 }
                 // 列挙型である場合
                 else if (true == type.IsEnum)
@@ -156,13 +167,27 @@ namespace ASPNET_Sample
                         else
                         {
                             object value = fieldInfo.GetValue(instance);
-                            objectMembers.Add(String.Format("{0} : {1}", fieldInfo.Name, PageWithDebug.FormatValue(value)));
+                            if (value is null)
+                            {
+                                objectMembers.Add(String.Format("{0} : {1}", fieldInfo.Name, PageWithDebug.FormatValue(value, depth + 1)));
+                            }
+                            else
+                            {
+                                objectMembers.Add(String.Format("{0} : {1}", fieldInfo.Name, (depth < 3) ? PageWithDebug.FormatValue(value, depth + 1) : value.ToString()));
+                            }
                         }
                     }
                     foreach (PropertyInfo propInfo in type.GetProperties())
                     {
                         object value = propInfo.GetValue(instance);
-                        objectMembers.Add(String.Format("{0} : {1}", propInfo.Name, PageWithDebug.FormatValue(value)));
+                        if (value is null)
+                        {
+                            objectMembers.Add(String.Format("{0} : {1}", propInfo.Name, PageWithDebug.FormatValue(value, depth + 1)));
+                        }
+                        else
+                        {
+                            objectMembers.Add(String.Format("{0} : {1}", propInfo.Name, (depth < 3) ? PageWithDebug.FormatValue(value, depth + 1) : value.ToString()));
+                        }
                     }
                     retStr = String.Format("({0}) {{ {1} }}", type.Name, String.Join(", ", objectMembers));
                 }
